@@ -9,11 +9,16 @@ import {
 } from 'react-native';
 
 class Login extends Component {
+  handleMoveToLandingScreen = () => {
+    console.log('Moving to Landing Screen');
+    this.props.navigation.navigate('LandingScreen');
+  };
 
   handleRegister = () => {
     console.log('Moving to Register Screen');
     this.props.navigation.navigate('Register');
   };
+
   render() {
     return (
         <View style={styles.container}>
@@ -31,7 +36,7 @@ class Login extends Component {
               placeholderTextColor="gray"
             />
             <Button
-              onPress={() => console.log('Attempted Login')}
+              onPress={this.handleMoveToLandingScreen}
               title="Login"
             />
             <View style={{height: 20}}>

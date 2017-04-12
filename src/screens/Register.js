@@ -22,6 +22,10 @@ class Register extends Component {
     console.log('Moving to Login Screen');
     this.props.navigation.navigate('Login');
   };
+  handleMoveToLandingScreen = () => {
+    console.log('Moving to Landing Screen');
+    this.props.navigation.navigate('LandingScreen');
+  }
 
   render() {
     return(
