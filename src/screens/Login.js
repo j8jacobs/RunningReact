@@ -22,6 +22,7 @@ class Login extends Component {
 
     }
 
+    this.login = this.login.bind(this);
     this.navigate = this.navigate.bind(this);
   }
 
@@ -31,8 +32,26 @@ class Login extends Component {
     })
   }
 
-  login() {
-    console.log('filler');
+  async login() {
+      try {
+          await firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password);
+
+          this.setState({
+              response: "Logged In!"
+          });
+
+          setTimeout(() => {
+              this.props.navigator.push({
+                  name: "LandingScreen"
+              })
+          }, 1500);
+
+      } catch (error) {
+          this.setState({
+              response: error.toString()
+          })
+      }
+
   }
 
   render() {
@@ -56,7 +75,7 @@ class Login extends Component {
               onChangeText={(password) => this.setState({password})}
             />
             <Button
-              onPress={() => this.navigate('LandingScreen')}
+              onPress={this.login}
               title="Login"
             />
             <View style={{height: 20}}>

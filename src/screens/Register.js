@@ -30,6 +30,7 @@ class Register extends Component {
         response: ""
     };
 
+    this.signup = this.signup.bind(this);
     this.navigate = this.navigate.bind(this);
   }
 
@@ -39,8 +40,26 @@ class Register extends Component {
       screen_name
     });*/
   }
-  signup() {
-    this.setState({response: "Logged In!"});
+  async signup() {
+      try {
+          await firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password);
+
+          this.setState({
+              response: "account created"
+          });
+
+          setTimeout(() => {
+              this.props.navigator.pop({
+                  name: "Login"
+              })
+          }, 1500);
+
+      } catch (error) {
+          this.setState({
+              response: error.toString()
+          })
+      }
+
   }
 
 
@@ -63,6 +82,7 @@ class Register extends Component {
         editable={true}
         placeholder="email@email.edu"
         placeholderTextColor="gray"
+        onChangeText={(email) => this.setState({email})}
         />
         <View style={{padding:10}}></View>
 
@@ -73,11 +93,12 @@ class Register extends Component {
         placeholder="@w$umP@$$"
         placeholderTextColor="gray"
         secureTextEntry={true}
+        onChangeText={(password) => this.setState({password})}
         />
         <View style={{padding:20}}></View>
 
         <Button
-          onPress={ () => this.setState({response: "Logged In!"})}
+          onPress={this.signup}
           title="Submit (Test, see Response)"
           style={{alignItems:'center'}}
           />

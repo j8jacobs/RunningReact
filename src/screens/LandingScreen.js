@@ -6,6 +6,9 @@ import {
   Button,
 } from 'react-native'
 
+import * as firebase from "firebase";
+
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -22,8 +25,28 @@ class LandingScreen extends Component {
       response: ""
     }
 
+    this.logout = this.logout.bind(this);
     this.navigate = this.navigate.bind(this);
   }
+  async logout() {
+
+      try {
+
+          await firebase.auth().signOut();
+
+          this.props.navigator.push({
+              name: "Login"
+          })
+
+      } catch (error) {
+          console.log(error);
+          this.setState({
+            response: error.toString()
+          })
+      }
+
+  }
+
   navigate(name) {
     this.props.navigator.push({
       name
@@ -36,10 +59,10 @@ class LandingScreen extends Component {
       <View style={styles.container}>
         <Text>Made it to the landing screen!</Text>
         <Button
-          onPress={() => this.navigate('Login')}
+          onPress={this.logout}
           title="Logout"
           />
-
+          <Text>{this.state.response}</Text>
       </View>
     );
   }
