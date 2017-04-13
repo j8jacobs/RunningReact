@@ -1,3 +1,4 @@
+/*
 import React, { Component } from 'react';
 import { Root } from './config/routes';
 
@@ -7,4 +8,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default App;*/

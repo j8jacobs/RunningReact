@@ -8,16 +8,32 @@ import {
   StyleSheet,
 } from 'react-native';
 
-class Login extends Component {
-  handleMoveToLandingScreen = () => {
-    console.log('Moving to Landing Screen');
-    this.props.navigation.navigate('LandingScreen');
-  };
+import * as firebase from "firebase";
 
-  handleRegister = () => {
-    console.log('Moving to Register Screen');
-    this.props.navigation.navigate('Register');
-  };
+
+class Login extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      email: "",
+      password: "",
+      response: ""
+
+    }
+
+    this.navigate = this.navigate.bind(this);
+  }
+
+  navigate(name) {
+    this.props.navigator.push({
+      name
+    })
+  }
+
+  login() {
+    console.log('filler');
+  }
 
   render() {
     return (
@@ -28,23 +44,30 @@ class Login extends Component {
               editable={true}
               placeholder="email"
               placeholderTextColor="gray"
+              keyboardType="email-address"
+              onChangeText={(email) => this.setState({email})}
             />
             <TextInput
               style={{height: 40, borderColor: 'gray', borderWidth: 1}}
               editable={true}
               placeholder="password"
               placeholderTextColor="gray"
+              secureTextEntry={true}
+              onChangeText={(password) => this.setState({password})}
             />
             <Button
-              onPress={this.handleMoveToLandingScreen}
+              onPress={() => this.navigate('LandingScreen')}
               title="Login"
             />
             <View style={{height: 20}}>
             </View>
             <Button
-              onPress={this.handleRegister}
+              onPress={() => this.navigate('Register')}
               title="New User?"
             />
+            <View style={{height: 40}}>
+              <Text>Response: {this.state.response}</Text>
+            </View>
         </View>
       );
   }
@@ -60,4 +83,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Login;
+module.exports = Login;

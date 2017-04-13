@@ -15,17 +15,28 @@ const styles = StyleSheet.create({
 });
 
 class LandingScreen extends Component {
-  handleLogout = () => {
-    console.log('User Logged out from Landing Screen');
-    this.props.navigation.navigate('Login');
+  constructor() {
+    super()
+
+    this.state = {
+      response: ""
+    }
+
+    this.navigate = this.navigate.bind(this);
   }
+  navigate(name) {
+    this.props.navigator.push({
+      name
+    })
+  }
+
 
   render() {
     return(
       <View style={styles.container}>
         <Text>Made it to the landing screen!</Text>
         <Button
-          onPress={this.handleLogout}
+          onPress={() => this.navigate('Login')}
           title="Logout"
           />
 

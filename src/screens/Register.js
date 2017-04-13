@@ -7,6 +7,9 @@ import {
   Button,
 } from 'react-native';
 
+import * as firebase from "firebase";
+
+
 const styles = StyleSheet.create({
   form_container: {
     flex: 1,
@@ -18,19 +21,34 @@ const styles = StyleSheet.create({
 });
 
 class Register extends Component {
-  handleMoveToLogin = () => {
-    console.log('Moving to Login Screen');
-    this.props.navigation.navigate('Login');
-  };
-  handleMoveToLandingScreen = () => {
-    console.log('Moving to Landing Screen');
-    this.props.navigation.navigate('LandingScreen');
+  constructor(props) {
+    super(props);
+
+    this.state = {
+        email: "",
+        password: "",
+        response: ""
+    };
+
+    this.navigate = this.navigate.bind(this);
   }
+
+  navigate(name) {
+    this.props.navigator.pop();
+    /*this.props.navigator.push({
+      screen_name
+    });*/
+  }
+  signup() {
+    this.setState({response: "Logged In!"});
+  }
+
+
 
   render() {
     return(
       <View style={styles.form_container}>
-        <Text>Name</Text>
+        <Text>Name (Sorry, it won't be remembered at this time)</Text>
         <TextInput
           style={{height: 40, borderColor: 'gray', borderWidth: 1}}
           editable={true}
@@ -59,14 +77,24 @@ class Register extends Component {
         <View style={{padding:20}}></View>
 
         <Button
-          onPress={this.handleMoveToLogin}
-          title="Submit"
+          onPress={ () => this.setState({response: "Logged In!"})}
+          title="Submit (Test, see Response)"
           style={{alignItems:'center'}}
           />
+          <View style={{padding:20}}></View>
+          <Button
+            onPress={() => this.navigate('Login')}
+            title="Go to Login Screen"
+            style={{alignItems:'center'}}
+            />
+
+            <View style={{padding:50}}>
+              <Text>Response: {this.state.response}</Text>
+            </View>
 
       </View>
     );
   }
 }
 
-export default Register;
+module.exports = Register;
